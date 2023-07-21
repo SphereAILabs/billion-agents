@@ -8,7 +8,6 @@ from langchain.schema import (
 )
 from langchain.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Chroma
 from langchain.embeddings import HuggingFaceEmbeddings
 
 
@@ -43,8 +42,9 @@ class WeatherAgent:
     The agent has no short term or long term memory. Every time you ask the agent a question, it does not
     have any memory of previous questions.
 
-    The agent uses ChromaDB for storing embeddings of Google Search results and uses RAG (Retrieval Augmented Generation) to
-    produce the final answer. After the agent answers the question, the vector database is disposed.
+    When the agent uses Google Search, it only looks at the first 2 documents based on the heuristic
+    that the top most result is probably the most relevant. Text from Google Search result is unstructured
+    so weather results may or may not be accurate as it depends on how GPT decides to parse it.
     """
 
     def __init__(self, temperature=0.0, verbose=True):
@@ -58,13 +58,31 @@ class WeatherAgent:
         )
         self.system_prompt = SystemMessage(content=SYSTEM_MESSAGE)
         self.splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,
-            chunk_overlap=20,
+            chunk_size=1000,
+            chunk_overlap=100,
         )
         self.embeddings = HuggingFaceEmbeddings()
 
     def _create_question(self, question: str) -> HumanMessage:
         return HumanMessage(content=f"Question: {question}")
+
+    def _search(self, query: str) -> Document:
+        # search google
+        google_search_doc = self._google_search(query)
+
+        # split the search doc
+        docs = self.splitter.split_documents([google_search_doc])
+
+        # get the top 2 results
+        top_result = docs[0:2]
+
+        content = ""
+        for doc in top_result:
+            content += doc.page_content
+
+        doc = Document(page_content=content, metadata=top_result[0].metadata)
+
+        return doc
 
     def _google_search(self, query: str) -> Document:
         uri = f"https://google.com/search?q={query}"
@@ -74,15 +92,9 @@ class WeatherAgent:
 
         return doc
 
-    def _create_inmemory_db_from_doc(self, doc: Document) -> Chroma:
-        # split the document in chunks using RecursiveCharacterTextSplitter
-        docs = self.splitter.split_documents([doc])
-        db = Chroma.from_documents(docs, embedding=self.embeddings)
-
-        return db
-
     def _is_final_answer(self, message: BaseMessage):
-        pass
+        content = message.content
+        return "Final Answer: " in content
 
     def _get_action_and_input(self, message: BaseMessage) -> dict:
         content = message.content.strip()
