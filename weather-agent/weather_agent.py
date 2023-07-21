@@ -1,6 +1,5 @@
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
-    AIMessage,
     HumanMessage,
     SystemMessage,
     BaseMessage,
@@ -9,25 +8,7 @@ from langchain.schema import (
 from langchain.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
-
-
-SYSTEM_MESSAGE = """Objective: Answer questions I have about the weather
-
-###
-Actions:
-- Search[query]: look up a query on Google
-ie. Search[What is the weather in NYC]
-
-###
-Use the following format:
-Question: <the input question you must answer>
-Thought: <reasoning on how you are going to accomplish the objective>
-Action: <action you are going to take>
-Observation: <the result of the action>
-... (this Thought/Action/Observation can repeat N times)
-Thought: <I now know the final answer>
-Final Answer: <the final answer to the original input question>
-"""
+from prompts import SYSTEM_MESSAGE
 
 
 class WeatherAgent:
@@ -47,9 +28,10 @@ class WeatherAgent:
     so weather results may or may not be accurate as it depends on how GPT decides to parse it.
     """
 
-    def __init__(self, temperature=0.0, verbose=True):
+    def __init__(self, temperature=0.0, verbose=True, max_iterations=2):
         self.temperature = temperature
         self.verbose = verbose
+        self.max_iterations = max_iterations
         self.model = "gpt-3.5-turbo"
         self.stop = ["\nObservation:"]
         self.llm = ChatOpenAI(
@@ -65,6 +47,9 @@ class WeatherAgent:
 
     def _create_question(self, question: str) -> HumanMessage:
         return HumanMessage(content=f"Question: {question}")
+
+    def _create_observation(self, observation: str) -> HumanMessage:
+        return HumanMessage(content=f"Observation: {observation}")
 
     def _search(self, query: str) -> Document:
         # search google
@@ -96,6 +81,14 @@ class WeatherAgent:
         content = message.content
         return "Final Answer: " in content
 
+    def _get_final_answer(self, message: BaseMessage):
+        content = message.content.strip()
+        final_anwser_prefix = "Final Answer: "
+        index = content.index(final_anwser_prefix)
+        final_answer = content[index + len(final_anwser_prefix) :]
+
+        return final_answer
+
     def _get_action_and_input(self, message: BaseMessage) -> dict:
         content = message.content.strip()
         action_prefix = "Action: "
@@ -114,11 +107,43 @@ class WeatherAgent:
         question_message = self._create_question(question)
         messages = [self.system_prompt, question_message]
 
-        print(question_message, messages)
+        iteration = 0
+
+        def should_loop():
+            if self.max_iterations == None:
+                return True
+
+            return iteration < self.max_iterations
 
         # agent runs loop until it gives a Final Answer
-        while True:
-            ai_message = self.llm(messages, stop=self.stop)
+        while should_loop():
+            iteration += 1
+            message = self.llm(messages, stop=self.stop)
 
-            return ai_message
-            break
+            # add ai message to chat messages
+            messages.append(message)
+
+            if self.verbose:
+                print(message.content)
+                print("-----")
+
+            # check if message contains Final Answer: -> stop the loop
+            contains_final_answer = self._is_final_answer(message)
+
+            # get the final answer if it exists
+            if contains_final_answer:
+                final_answer = self._get_final_answer(message)
+                return final_answer
+
+            # parse action the agent wants to perform
+            action_dict = self._get_action_and_input(message)
+            action, action_input = action_dict["action"], action_dict["action_input"]
+
+            if action == "Search":
+                # search query on Google
+                search_result = self._search(action_input)
+
+                # feed observation to the agent
+                observation = self._create_observation(search_result.page_content)
+                print(observation.content)
+                messages.append(observation)
