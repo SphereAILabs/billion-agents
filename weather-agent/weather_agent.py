@@ -58,8 +58,8 @@ class WeatherAgent:
         # split the search doc
         docs = self.splitter.split_documents([google_search_doc])
 
-        # get the top 2 results
-        top_result = docs[0:2]
+        # get the top 3 results
+        top_result = docs[0:3]
 
         content = ""
         for doc in top_result:
