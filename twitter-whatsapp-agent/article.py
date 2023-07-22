@@ -2,8 +2,8 @@ from newspaper import Article
 from typing import TypedDict
 
 
-def get_article_data(uri: str) -> dict:
-    article = Article(uri)
+def get_article_data(url: str) -> dict:
+    article = Article(url)
 
     # download text
     article.download()
@@ -28,9 +28,9 @@ def get_article_data(uri: str) -> dict:
         "description": description,
         "authors": authors,
         "content": content,
-        "uri": uri,
+        "url": url,
         "publish_date": publish_date,
         "keywords": keywords,
         "summary": summary,
-        "meta_data": dict(meta_data),
+        # "meta_data": dict(meta_data),
     }
