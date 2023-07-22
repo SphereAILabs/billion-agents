@@ -2,7 +2,18 @@ from newspaper import Article
 from typing import TypedDict
 
 
-def get_article_data(url: str) -> dict:
+class ArticleData(TypedDict):
+    title: str
+    description: str
+    authors: list[str]
+    content: str
+    url: str
+    publish_date: str
+    keywords: list[str]
+    summary: str
+
+
+def get_article_data(url: str) -> ArticleData:
     article = Article(url)
 
     # download text
