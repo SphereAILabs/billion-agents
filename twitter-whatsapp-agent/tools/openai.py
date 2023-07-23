@@ -10,8 +10,14 @@ class OpenAITool(Tool):
     input_schema = "(article: ArticleData, prompt: str)"
     output_schema = "str"
 
+    def variable_params(self) -> list[str]:
+        return ["article"]
+
     def __call__(self, article: ArticleData, prompt: str) -> str:
         llm = ChatOpenAI(temperature=1.0)
+
+        print("doing shit to article")
+        print(type(article))
 
         # for now no semantic search
 

@@ -17,6 +17,10 @@ class Tool:
     output_schema = ""
 
     @property
+    def should_store_output(self) -> bool:
+        return False
+
+    @property
     def prompt(self) -> str:
         return f"""{self.name}: {self.description}
 input: {self.input_schema}
@@ -27,9 +31,11 @@ output: {self.output_schema}"""
         pass
 
     @abstractmethod
-    def rep(self) -> str:
-        """
-        Returns the representation of the result of calling a tool. This is
-        passed into the agent as the observation.
-        """
+    def observation(self, output) -> str:
         pass
+
+    def variable_params(self) -> list[str]:
+        """
+        What variables to extract (details on this later)
+        """
+        return []

@@ -14,11 +14,21 @@ class ArticleData(TypedDict):
     summary: str
 
 
+count = 0
+
+
 class ArticleTool(Tool):
     name = "Article"
     description = "use this tool to fetch article data given an url"
     input_schema = "(url: str)"
     output_schema = "ArticleData"
+
+    def observation(self, output: ArticleData) -> str:
+        count += 1
+        return f"Successfully fetched article with url={output['url']}. You can reference it by 'article_{count}'"
+
+    def should_store_output(self) -> bool:
+        return True
 
     def get_article_data(self, url: str) -> ArticleData:
         article = Article(url)

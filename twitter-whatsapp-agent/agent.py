@@ -143,3 +143,4 @@ class ArticleWhatsAppAgent:
                     observation = HumanMessage(content=observation_message)
                     print(observation)
                     messages.append(observation)
+            break
