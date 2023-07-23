@@ -17,8 +17,10 @@ class ArticleData(TypedDict):
 class ArticleTool(Tool):
     name = "Article"
     description = "use this tool to fetch article data given an url"
+    input_schema = "(url: str)"
+    output_schema = "Article(url=str)"
 
-    def get_article_data(url: str) -> ArticleData:
+    def get_article_data(self, url: str) -> ArticleData:
         article = Article(url)
 
         # download text
@@ -52,3 +54,6 @@ class ArticleTool(Tool):
 
     def __call__(self, url: str) -> ArticleData:
         return self.get_article_data(url)
+
+    def rep(self, article_data: ArticleData) -> str:
+        pass
