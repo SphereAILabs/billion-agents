@@ -19,6 +19,9 @@ class ToolBox:
     def contains_tool(self, toolname: str) -> bool:
         return toolname in self.tools
 
+    def get_tool(self, toolname: str) -> Tool:
+        return self.tools[toolname]
+
     @property
     def prompt(self) -> str:
         prompt = ""

@@ -1,5 +1,5 @@
 from .tool import Tool
-from article import ArticleData
+from .article import ArticleData
 from langchain.chat_models import ChatOpenAI
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 

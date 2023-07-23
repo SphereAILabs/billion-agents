@@ -1,10 +1,10 @@
-from .tools.tool import Tool
+from tools.tool import Tool
 import typing
-
-count = 0
 
 
 class ToolExecutor(Tool):
+    count = 0
+
     def __init__(self, tool: Tool, variables: dict[str, typing.Any]):
         self.tool = tool
         self.name = tool.name
@@ -21,7 +21,7 @@ class ToolExecutor(Tool):
         for key in kwargs.keys():
             value = kwargs[key]
             if key in variable_params:
-                value = self.variables[key]
+                value = self.variables[value]
 
             params[key] = value
 
@@ -37,8 +37,10 @@ class ToolExecutor(Tool):
         should_store = self.tool.should_store_output
 
         if should_store:
-            count += 1
-            variable = f"var_{count}"
+            self.count += 1
+            variable = f"var_{self.count}"
             self.variables[variable] = output
 
-        return self.tool.observation(output, variable)
+            return self.tool.observation(output, variable)
+
+        return self.tool.observation(output, "")

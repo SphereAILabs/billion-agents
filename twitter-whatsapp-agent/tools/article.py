@@ -14,9 +14,6 @@ class ArticleData(TypedDict):
     summary: str
 
 
-count = 0
-
-
 class ArticleTool(Tool):
     name = "Article"
     description = "use this tool to fetch article data given an url"
@@ -24,7 +21,6 @@ class ArticleTool(Tool):
     output_schema = "ArticleData"
 
     def observation(self, output: ArticleData, variable: str) -> str:
-        count += 1
         return f"Successfully fetched article with url={output['url']}. You can reference it by '{variable}'"
 
     def should_store_output(self) -> bool:

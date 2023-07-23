@@ -58,7 +58,8 @@ class ArticleWhatsAppAgent:
 
     def __init__(self, temperature=0.7, max_iterations=2):
         self.llm = ChatOpenAI(temperature=temperature)
-        self.tools = [ToolExecutor(tool) for tool in TOOLS]
+        self.variables = {}
+        self.tools = [ToolExecutor(tool, self.variables) for tool in TOOLS]
         self.toolbox = ToolBox(tools=self.tools)
         self.planner = TaskPlanner(toolbox=self.toolbox)
         self.max_iterations = max_iterations
@@ -90,8 +91,6 @@ class ArticleWhatsAppAgent:
         print(task_prompt)
         print("---")
 
-        articles_cache = {}
-
         i = 0
 
         # enter loop
@@ -114,35 +113,17 @@ class ArticleWhatsAppAgent:
                 if not valid_tool:
                     raise RuntimeError(f"{action} is not a valid tool")
 
+                tool = self.toolbox.get_tool(action)
                 action_input = parsed_content["action_input"]
 
-                # manual: hope to replace with something more robust
-                if action == "Article":
-                    print(action_input)
-                    variable = "article_1"
-                    article = article_tool(action_input["url"])
-                    articles_cache[variable] = article
+                result = tool(**action_input)
+                observation = tool.observation(result)
 
-                    observation_message = f"""{{
-"observation": "Successfully fetched article at {action_input["url"]}. Stored article data in variable '{variable}'"
-}}
-"""
-                    observation = HumanMessage(content=observation_message)
-                    print(observation)
-                    messages.append(observation)
-                elif action == "OpenAI":
-                    print(action_input)
+                print(observation)
+                observation_message = HumanMessage(
+                    content=f"""{{
+"observation": "{observation}"
+}}"""
+                )
 
-                    prompt = action_input["prompt"]
-                    article = action_input["article"]
-                    article = articles_cache[article]
-
-                    result = openai_tool(article, prompt)
-                    observation_message = f"""{{
-"observation": "{result}"
-}}
-"""
-                    observation = HumanMessage(content=observation_message)
-                    print(observation)
-                    messages.append(observation)
-            break
+                messages.append(observation_message)
