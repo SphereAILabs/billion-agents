@@ -16,6 +16,9 @@ class ToolBox:
         # map tool name to tool
         self.tools = {tool.name: tool for tool in tools}
 
+    def contains_tool(self, toolname: str) -> bool:
+        return toolname in self.tools
+
     @property
     def prompt(self) -> str:
         prompt = ""
