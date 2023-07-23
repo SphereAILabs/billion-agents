@@ -1,6 +1,8 @@
 from .tools.tool import Tool
 import typing
 
+count = 0
+
 
 class ToolExecutor(Tool):
     def __init__(self, tool: Tool, variables: dict[str, typing.Any]):
@@ -25,15 +27,18 @@ class ToolExecutor(Tool):
 
         # call tool
         result = self.tool(**params)
-        should_store = self.tool.should_store_output
 
-        if should_store:
-            self.variables
-
-        return
+        return result
 
     def variable_params(self) -> list[str]:
         return self.tool.variable_params()
 
     def observation(self, output) -> str:
-        return self.tool.observation(output)
+        should_store = self.tool.should_store_output
+
+        if should_store:
+            count += 1
+            variable = f"var_{count}"
+            self.variables[variable] = output
+
+        return self.tool.observation(output, variable)

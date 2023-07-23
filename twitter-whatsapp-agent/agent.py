@@ -5,6 +5,7 @@ from toolbox import ToolBox
 from planner import TaskPlanner
 from tools.article import ArticleTool
 from tools.openai import OpenAITool
+from tool_executor import ToolExecutor
 import json
 
 article_tool = ArticleTool()
@@ -57,7 +58,8 @@ class ArticleWhatsAppAgent:
 
     def __init__(self, temperature=0.7, max_iterations=2):
         self.llm = ChatOpenAI(temperature=temperature)
-        self.toolbox = ToolBox(tools=TOOLS)
+        self.tools = [ToolExecutor(tool) for tool in TOOLS]
+        self.toolbox = ToolBox(tools=self.tools)
         self.planner = TaskPlanner(toolbox=self.toolbox)
         self.max_iterations = max_iterations
 

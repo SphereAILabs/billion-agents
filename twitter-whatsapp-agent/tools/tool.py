@@ -31,7 +31,7 @@ output: {self.output_schema}"""
         pass
 
     @abstractmethod
-    def observation(self, output) -> str:
+    def observation(self, output, variable) -> str:
         pass
 
     def variable_params(self) -> list[str]:

@@ -23,9 +23,9 @@ class ArticleTool(Tool):
     input_schema = "(url: str)"
     output_schema = "ArticleData"
 
-    def observation(self, output: ArticleData) -> str:
+    def observation(self, output: ArticleData, variable: str) -> str:
         count += 1
-        return f"Successfully fetched article with url={output['url']}. You can reference it by 'article_{count}'"
+        return f"Successfully fetched article with url={output['url']}. You can reference it by '{variable}'"
 
     def should_store_output(self) -> bool:
         return True
