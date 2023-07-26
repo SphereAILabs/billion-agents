@@ -30,9 +30,8 @@ output: {self.output_schema}"""
     def __call__(self):
         pass
 
-    @abstractmethod
     def observation(self, output, variable) -> str:
-        pass
+        return output
 
     def variable_params(self) -> list[str]:
         """

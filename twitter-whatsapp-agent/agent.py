@@ -20,7 +20,7 @@ You have access to these tools:
 ###
 Use the following format:
 Task: the task you must complete
-Plan: a tentative plan with steps that may assist you
+Plan: a tentative plan with steps that may assist you; you do not have to follow this plan if you find a more optimal plan
 
 {{
 "thought": str # your reasoning about what to do
