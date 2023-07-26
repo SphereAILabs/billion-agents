@@ -1,7 +1,11 @@
-from .tool import Tool
-from .article import ArticleData
+from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
+from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.vectorstores import Chroma
+
+from .article import ArticleData
+from .tool import Tool
 
 
 class OpenAITool(Tool):
@@ -23,7 +27,7 @@ class OpenAITool(Tool):
 
         # basic: split article content into chunks
         text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
+            chunk_size=2000,
             chunk_overlap=20,
             length_function=len,
             add_start_index=True,
@@ -31,7 +35,13 @@ class OpenAITool(Tool):
 
         contents = text_splitter.create_documents([article["content"]])
 
-        # print(len(contents))
-        # print(len(contents[0].page_content))
+        # semantic search with Chromadb
+        db = Chroma.from_documents(contents, embedding=HuggingFaceEmbeddings())
 
-        return "This is an awesome article!!!!"
+        # create qa chain (refactor this later)
+        qa_chain = RetrievalQA.from_chain_type(llm, retriever=db.as_retriever())
+
+        # call chain
+        result = qa_chain({"query": prompt})
+
+        return result
