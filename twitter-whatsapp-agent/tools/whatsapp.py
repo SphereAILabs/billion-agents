@@ -10,6 +10,6 @@ class WhatsAppTool(Tool):
     output_schema = "Sent!"
 
     def __call__(self, message: str):
-        pywhatkit
+        pywhatkit.sendwhatmsg_instantly("+9179571377", message, 5)
 
         return "Sent!"

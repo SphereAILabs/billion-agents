@@ -13,3 +13,58 @@ Time: 12:21
 Phone Number: +9179571377
 Message: Hi Eric Chen
 --------------------
+Date: 26/7/2023
+Time: 15:47
+Phone Number: +9179571377
+Message: One key insight from the article is that the future of software is shifting towards more bespoke, customizable, and remixable applications. The concept of 'Malleable Software' or 'Malleable Source' is introduced, which refers to apps that allow users to modify their underlying code with the help of AI. This new paradigm blurs the line between app users and developers, potentially leading to diverse and personalized software experiences. Additionally, this shift could result in the rise of indie or micro SaaS apps and more individuals and businesses choosing to build their own software rather than relying on pre-existing vendors.
+--------------------
+Date: 26/7/2023
+Time: 16:1
+Phone Number: +9179571377
+Message: Here are the 5 takeaways from the article:1. The rise of bespoke apps: The article discusses how AI customization can lead to the creation of bespoke apps that are tailored to individual users. This eliminates the need for traditional infrastructure and simplifies user accounts and data security.2. Blurring the line between users and developers: AI technology blurs the distinction between app users and app developers. With more accessible customization options, users can have the equivalent of a junior developer to customize their apps according to their needs and preferences.3. Potential for new business models: The ability for anyone to modify and personalize software opens up possibilities for new business models. Forking and modifying existing software can lead to innovative approaches and unique offerings.4. Challenges of malleable software: While malleable software offers customization benefits, it also presents challenges. Updating customized apps and ensuring compatibility with modified versions can be complex. The article highlights the need for open-source software in this paradigm.5. Malleable software as the future: The article suggests that malleable software is the future of app development. This customizable and remixable approach has the potential to create a more diverse and tailored software landscape.
+--------------------
+Date: 26/7/2023
+Time: 16:2
+Phone Number: +9179571377
+Message: Here is the article link: https://every.to/chain-of-thought/what-comes-after-saas
+--------------------
+Date: 26/7/2023
+Time: 16:2
+Phone Number: +9179571377
+Message: Here is the summary of the article: The article discusses the future of software as a service (SaaS) and introduces the concept of 'malleable software.' The author compares operating a SaaS app to running a one-room hotel with unlimited occupancy. Each customer gets the same basic setup but can request customizations. However, as more customizations are made, it becomes expensive and time-consuming to deal with. The article suggests that AI could blur the line between app users and developers, allowing for more diverse and creative software that reflects the user's identity. The article also mentions the possibility of new business models and the need for malleable software to be open source. It concludes by inviting readers to try a malleable software app built using ChatGPT on Replit. Overall, the article explores the potential of customized, remixable software beyond the current generation of SaaS.
+--------------------
+Date: 26/7/2023
+Time: 16:5
+Phone Number: +9179571377
+Message: Summary of 'https://every.to/chain-of-thought/what-comes-after-saas': The rise of customized, AI-powered software may lead to a future where software is more diverse, creative, and bespoke. This shift could blur the line between users and developers, enable new business models, and make it easier to build small SaaS apps that keep data secure. It is referred to as 'Malleable Software' or 'Malleable Source'.
+--------------------
+Date: 26/7/2023
+Time: 16:5
+Phone Number: +9179571377
+Message: Summary of 'https://www.sequoiacap.com/article/ai-paradox-perspective/': The main idea discussed in the article is the need for a more precise vocabulary to understand and harness the potential of artificial intelligence (AI) and its impact on human life. The author highlights the importance of distinguishing between what is considered AI and what is not, as the current understanding of AI is imitative of human intelligence. The article also mentions the AI effect, which is part of a larger human phenomenon known as the frontier paradox. The frontier paradox refers to the constant progression and redefinition of technological advancements that push the boundaries of human knowledge and capabilities. Ultimately, the author argues that a more precise vocabulary is needed to accurately navigate and capitalize on the capabilities of AI.
+--------------------
+Date: 26/7/2023
+Time: 16:29
+Phone Number: +9179571377
+Message: Takeaway 1: The current AI paradigm is often characterized by hype followed by disappointment, and founders should aim to have a more precise understanding of what AI truly is.Takeaway 2: The distinction between users and developers could be blurred with the rise of AI, allowing everyone to have the equivalent of a junior developer at their disposal and the ability to customize software.Takeaway 3: The concept of software as a reflection of one's identity could become more prevalent, with better and cheaper customization options available.Takeaway 4: The development of large language models and natural language interfaces has made AI more accessible to a wider range of users, contributing to the current popularity of AI.Takeaway 5: The article discusses the potential for new business models to emerge with the ability for anyone to modify software, leading to more diverse and bespoke software options.
+--------------------
+Date: 26/7/2023
+Time: 16:29
+Phone Number: +9179571377
+Message: Here is the article link: https://every.to/chain-of-thought/what-comes-after-saas
+--------------------
+Date: 26/7/2023
+Time: 16:30
+Phone Number: +9179571377
+Message: The article discusses the concept of 'malleable software' as the next step after Software as a Service (SaaS). It highlights the limitations of the current AI paradigm and suggests that a more precise vocabulary is needed to understand the advancements in AI. The article also compares operating a SaaS app to running a hotel with unlimited occupancy, where all guests receive the same basic setup but can request customizations. It mentions the potential for new business models and blurring the line between app users and app developers. The author emphasizes the idea of software as a reflection of one's identity and the possibility of more diverse and customized software in the future.
+--------------------
+Date: 26/7/2023
+Time: 16:30
+Phone Number: +9179571377
+Message: Summary of 'What Comes After SaaS':The future of software, particularly SaaS, could involve more bespoke and customizable applications that are tailored to individual users. Advancements in AI technology may blur the distinction between users and developers, allowing users to modify the underlying code of their software and create personalized experiences. This could lead to the rise of indie or micro SaaS apps and new business models. The concept is referred to as 'Malleable Software' or 'Malleable Source'.
+--------------------
+Date: 26/7/2023
+Time: 16:31
+Phone Number: +9179571377
+Message: Summary of 'AI Paradox Perspective':The main argument presented in the article is that the current understanding of Artificial Intelligence (AI) is limited by language and the definition of AI as imitative of humans. The author argues for a redefinition of AI with a more precise vocabulary, highlighting the need to break the cycle of AI hype and misunderstanding. The article also discusses the blurring distinction between users and developers in the AI field and the possibility of new business models in a world where anyone can customize and modify software.
+--------------------

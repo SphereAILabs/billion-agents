@@ -5,12 +5,14 @@ from toolbox import ToolBox
 from planner import TaskPlanner
 from tools.article import ArticleTool
 from tools.openai import OpenAITool
+from tools.whatsapp import WhatsAppTool
 from tool_executor import ToolExecutor
 import json
 
+whatsapp_tool = WhatsAppTool()
 article_tool = ArticleTool()
 openai_tool = OpenAITool()
-TOOLS = [article_tool, openai_tool]
+TOOLS = [article_tool, openai_tool, whatsapp_tool]
 
 SYSTEM_PROMPT_TEMPLATE = """You are an autonomous agent that can complete tasks by following a series of steps and using available tools. You will be provided with a tentative plan outlining steps that may assist you.
 
@@ -56,7 +58,7 @@ class ArticleWhatsAppAgent:
     The Agent can only send messages to Sam!
     """
 
-    def __init__(self, temperature=0.7, max_iterations=2):
+    def __init__(self, temperature=0.5, max_iterations=2):
         self.llm = ChatOpenAI(temperature=temperature)
         self.variables = {}
         self.tools = [ToolExecutor(tool, self.variables) for tool in TOOLS]
@@ -88,8 +90,9 @@ class ArticleWhatsAppAgent:
             HumanMessage(content=task_prompt),
         ]
 
-        print(task_prompt)
-        print("---")
+        print("***PLAN***")
+        print(plan)
+        print("**********")
 
         i = 0
 
@@ -99,11 +102,19 @@ class ArticleWhatsAppAgent:
 
             message = self.llm(messages)
             content = message.content
+
+            # print(content)
             parsed_content = json.loads(content)
 
             messages.append(message)
 
-            print(parsed_content)
+            # print agent stack
+            for field, value in parsed_content.items():
+                print(f"{field}: {value}")
+
+            # check if completed task
+            if "final_answer" in parsed_content:
+                break
 
             # check if agent wants to execute an action using a tool
             if self._is_action(parsed_content):
@@ -119,7 +130,8 @@ class ArticleWhatsAppAgent:
                 result = tool(**action_input)
                 observation = tool.observation(result)
 
-                print(observation)
+                print(f"observation: {observation}")
+
                 observation_message = HumanMessage(
                     content=f"""{{
 "observation": "{observation}"
